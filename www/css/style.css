@@ -1,0 +1,23 @@
+/* Empty. Add your own CSS if you like */
+.bar-assertive{
+text-align: center;
+}
+.title {
+text-align: center;
+}
+.scroll-content{
+  background-color:#999999;
+  height: 100%;
+}
+.list{
+  margin-top: 150px;
+}
+.mainbuttons{
+  margin-top: 100px;
+}
+.trafficinfobuttons{
+  margin-top: 200px;
+}
+.welcomebtns{
+  margin-top: 300px;
+}

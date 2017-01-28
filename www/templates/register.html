@@ -1,0 +1,26 @@
+<ion-view view-title="">
+  <ion-content class="padding">
+    <h2 class="title">Register Page</h2>
+
+    <form name="registerForm" novalidate="">
+
+      <div class="list">
+        <label class="item item-input">
+          <input type="email" name="email" ng-model="form.email" placeholder="Enter your Email" required>
+        </label>
+        <label class="item item-input">
+          <input type="password" name="password" ng-model="form.password" placeholder="Choose your Password" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="licence" ng-model="form.licence" placeholder="Enter your Licence Number" required>
+        </label>
+      </div>
+
+      <button type="submit" class="button button-block button-positive" ng-disabled="registerForm.$invalid" ng-click="registerForm.$valid && register(registerForm)">
+        Register
+      </button>
+
+    </form>
+
+  </ion-content>
+</ion-view>
