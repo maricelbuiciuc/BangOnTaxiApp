@@ -5,19 +5,26 @@ text-align: center;
 .title {
 text-align: center;
 }
+h4{
+text-align: center;
+}
+.done{
+  text-decoration: line-through;
+  color:#ccc;
+}
 .scroll-content{
   background-color:#999999;
   height: 100%;
 }
 .list{
-  margin-top: 150px;
-}
-.mainbuttons{
   margin-top: 100px;
 }
-.trafficinfobuttons{
+.mainMenuButtons{
+  margin-top: 100px;
+}
+.trafficInfoButtons{
   margin-top: 200px;
 }
-.welcomebtns{
+.welcomeButtons{
   margin-top: 300px;
 }

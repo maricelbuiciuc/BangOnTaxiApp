@@ -1,11 +1,8 @@
 angular.module('starter.services', ['firebase'])
 
 .factory('Firebase', function($http, $q) {
-
   return {
-
     saveLicence: function(id, email, licence) {
-
       console.log('ID: ' + id);
       console.log('Email: ' + email);
       console.log('Licence: ' + licence);
@@ -14,8 +11,20 @@ angular.module('starter.services', ['firebase'])
         email   : email,
         licence : licence
       });
+    },
+    saveReport: function(user, report) {
+      console.log('User: ' + JSON.stringify(user));
+      console.log('Report: ' + JSON.stringify(report));
 
+      var newMessage = firebase.database().ref('messages').push();
+      newMessage.set({
+        uid       : user.uid,
+        email     : user.email,
+        message   : report.text,
+        type      : report.type,
+        //created   : firebase.database.ServerValue.TIMESTAMP
+        date      : new Date().getTime()
+      });
     }
-
   }
 });

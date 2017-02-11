@@ -20,25 +20,14 @@
     -->
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/annyang/src/annyang.js"></script>
     <!-- cordova script (this will be a 404 during development) -->
     <script src="cordova.js"></script>
     <!-- Firebase -->
     <!-- <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script> -->
     <!-- AngularFire -->
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
-    <!--
-    <script>
-      // Initialize Firebase
-      var config = {
-        apiKey: "AIzaSyAK35QobJCwHVhGtVCuskUBMxdE8QuebAc",
-        authDomain: "bangontaxiapp.firebaseapp.com",
-        databaseURL: "https://bangontaxiapp.firebaseio.com",
-        storageBucket: "bangontaxiapp.appspot.com",
-        messagingSenderId: "185683696781"
-      };
-      firebase.initializeApp(config);
-    </script>
-    -->
+
     <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
     <script>
       // Initialize Firebase
@@ -57,15 +46,9 @@
     <script src="js/services.js"></script>
   </head>
   <body ng-app="starter">
-      <ion-nav-bar class="bar-assertive">
+      <ion-nav-bar class="bar-dark">
         <ion-nav-back-button></ion-nav-back-button>
-      </ion-nav-bar><ion-nav-view>
-      </ion-nav-view>
-
-      <div class="bar bar-footer bar-assertive">
-           <button class="button icon ion-home"></button>
-           <button class="button icon ion-star"></button>
-           <button class="button icon ion-navicon"></button>
-      </div>
+      </ion-nav-bar>
+      <ion-nav-view></ion-nav-view>
   </body>
 </html>
