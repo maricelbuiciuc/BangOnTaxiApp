@@ -1,6 +1,8 @@
 /* Empty. Add your own CSS if you like */
+
 .bar-assertive{
 text-align: center;
+color: black;
 }
 .title {
 text-align: center;
@@ -8,21 +10,20 @@ text-align: center;
 h4{
 text-align: center;
 }
-.done{
-  text-decoration: line-through;
-  color:#ccc;
+.padding{
+  margin-top: 40px;
 }
 .scroll-content{
   background-color:#999999;
   height: 100%;
 }
 .list{
-  margin-top: 100px;
+  margin-top: 70px;
 }
 .mainMenuButtons{
   margin-top: 100px;
 }
-.trafficInfoButtons{
+.roadInfoButtons{
   margin-top: 200px;
 }
 .welcomeButtons{

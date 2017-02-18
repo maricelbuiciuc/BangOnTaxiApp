@@ -1,9 +1,8 @@
 // Ionic Starter App
-
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'firebase'])
+angular.module('bangOnTaxiApp', ['ionic', 'bangOnTaxiApp.controllers', 'bangOnTaxiApp.services', 'firebase'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
@@ -57,15 +56,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       templateUrl: 'templates/streetMap.html',
       controller: 'StreetMapCtrl'
     })
-    .state('trafficInfo', {
-      url: '/trafficInfo',
-      templateUrl: 'templates/trafficInfo.html',
-      controller: 'TrafficInfoCtrl'
+    .state('roadInfo', {
+      url: '/roadInfo',
+      templateUrl: 'templates/roadInfo.html',
+      controller: 'RoadInfoCtrl'
     })
-    .state('parkingStatus', {
-      url: '/parkingStatus',
-      templateUrl: 'templates/parkingStatus.html',
-      controller: 'ParkingStatusCtrl'
+    .state('ranks', {
+      url: '/ranks',
+      templateUrl: 'templates/ranks.html',
+      controller: 'RanksCtrl'
     })
     .state('leaderboard', {
       url: '/leaderboard',
@@ -82,17 +81,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       templateUrl: 'templates/accidents.html',
       controller: 'AccidentsCtrl'
     })
-    .state('radarsCheckpoints', {
-      url: '/radarsCheckpoints',
-      templateUrl: 'templates/radarsCheckpoints.html',
-      controller: 'RadarsCheckpointsCtrl'
+    .state('checkpoints', {
+      url: '/checkpoints',
+      templateUrl: 'templates/checkpoints.html',
+      controller: 'CheckpointsCtrl'
     })
-    .state('busyBlockedRd', {
-      url: '/busyBlockedRd',
-      templateUrl: 'templates/busyBlockedRd.html',
-      controller: 'BusyBlockedRdCtrl'
+    .state('traffic', {
+      url: '/traffic',
+      templateUrl: 'templates/traffic.html',
+      controller: 'TrafficCtrl'
     });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/welcome');
-
 });

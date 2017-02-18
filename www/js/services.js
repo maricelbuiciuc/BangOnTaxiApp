@@ -1,4 +1,4 @@
-angular.module('starter.services', ['firebase'])
+angular.module('bangOnTaxiApp.services', ['firebase'])
 
 .factory('Firebase', function($http, $q) {
   return {
@@ -27,4 +27,17 @@ angular.module('starter.services', ['firebase'])
       });
     }
   }
+/*
+  $scope.doRefresh = function() {
+     $http.get('/new-items')
+      .success(function(newItems) {
+        $scope.items = newItems;
+      })
+      .finally(function() {
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+      });
+   };
+*/
+
 });
