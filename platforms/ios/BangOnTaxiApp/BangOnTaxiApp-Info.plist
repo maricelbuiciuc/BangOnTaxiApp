@@ -40,6 +40,28 @@
       <true/>
     </dict>
     <key>NSLocationWhenInUseUsageDescription</key>
-    <string/>
+    <string>$NSLocationWhenInUseUsageDescription</string>
+    <key>Google Maps API Key</key>
+    <string>AIzaSyAc-bGIBmrhMVnWpnohKz7O2ml718W20pw</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>$NSLocationAlwaysUsageDescription</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+      <string>googlechromes</string>
+      <string>comgooglemaps</string>
+    </array>
+    <key>CFBundleURLTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleURLName</key>
+        <string>com.ionicframework.bangontaxiapp522841</string>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.ionicframework.bangontaxiapp522841</string>
+        </array>
+      </dict>
+    </array>
   </dict>
 </plist>

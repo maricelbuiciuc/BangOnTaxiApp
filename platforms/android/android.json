@@ -50,7 +50,9 @@
                             "xml": "<uses-feature android:name=\"android.hardware.location.gps\" />",
                             "count": 1
                         }
-                    ]
+                    ],
+                    "/manifest/application": [],
+                    "/manifest": []
                 }
             }
         }

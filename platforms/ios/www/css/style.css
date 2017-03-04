@@ -1,30 +1,28 @@
 /* Empty. Add your own CSS if you like */
-.bar-assertive{
-text-align: center;
-}
+
+
 .title {
 text-align: center;
 }
+h4{
+text-align: center;
+}
+.padding{
+  margin-top: 40px;
+}
 .scroll-content{
-  background-color:#999999;
+  background-color:#999666;
   height: 100%;
-}
-.scroll{
-  height: 100%;
-}
-#map{
-  height: 100%;
-  width: 100%;
 }
 .list{
-  margin-top: 150px;
+  margin-top: 70px;
 }
-.mainbuttons{
+.mainMenuButtons{
   margin-top: 100px;
 }
-.trafficinfobuttons{
+.roadInfoButtons{
   margin-top: 200px;
 }
-.welcomebtns{
+.welcomeButtons{
   margin-top: 300px;
 }

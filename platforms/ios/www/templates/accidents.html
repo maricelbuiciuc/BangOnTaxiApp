@@ -1,14 +1,15 @@
 <ion-view view-title="Accidents">
   <ion-content class="padding">
-    <h2 class="title">1. Accidents</h2>
-    <h2 class="title">2. Accidents</h2>
-    <h2 class="title">3. Accidents</h2>
-    <h2 class="title">4. Accidents</h2>
-    <h2 class="title">5. Accidents</h2>
-    <h2 class="title">6. Accidents</h2>
-    <h2 class="title">7. Accidents</h2>
-    <h2 class="title">8. Accidents</h2>
-    <h2 class="title">9. Accidents</h2>
-    <h2 class="title">10. Accidents</h2>
-    
+    <h2 class="title">Accidents</h2>
+  <ion-list>
+    <ion-item ng-repeat="message in messages" class="item-text-wrap">
+      {{ message.email }}<br>
+      {{ message.message }}
+    </ion-item>
+  </ion-list>
+  </ion-content>
 </ion-view>
+<div class="bar bar-footer bar-assertive">
+     <button class="button icon ion-home" ng-click="goHome()"></button>
+      <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
+</div>

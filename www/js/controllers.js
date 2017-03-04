@@ -164,13 +164,118 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
 })
 
-.controller('StreetMapCtrl', function($scope, $state) {
+.controller('StreetMapCtrl', function($scope, $state, $cordovaGeolocation) {
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
+
+
+  var options = {
+    timeout             : 10000,
+    enableHighAccuracy  : true
+  };
+
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+    //Wait until the map is loaded
+    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+      var ref = firebase.database().ref('messages');
+      ref.on('value', function(snapshot) {
+
+        if (snapshot) {
+
+          snapshot.forEach(function (childSnapshot) {
+
+            var color,
+                item = childSnapshot.val(),
+                location = new google.maps.LatLng(item.location.latitude, item.location.longitude);
+
+            console.log('Item: ' + JSON.stringify(item));
+            console.log('location: ' + location);
+            console.log('latLng: ' + latLng);
+
+            switch (item.type) {
+              case 'accident':
+                color = 'FF0000';
+                break;
+              case 'traffic':
+                color = 'FFFF00';
+                break;
+              case 'checkpoint':
+                color = '00FF00';
+                break;
+              case 'rank':
+                color = '6699FF';
+                break;
+              default:
+                color = '9933FF';
+            }
+
+            var image = {
+              url: 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|' + color
+            };
+
+            var geocoder = new google.maps.Geocoder;
+
+            geocoder.geocode({'location': location}, function(results, status) {
+              if (status === 'OK') {
+                if (results[1]) {
+
+                  var marker = new google.maps.Marker({
+                    icon      : image,
+                    map       : $scope.map,
+                    animation : google.maps.Animation.DROP,
+                    position  : location
+                  });
+
+                  var infoWindow = new google.maps.InfoWindow({
+                    content   : '<b>' + item.type.charAt(0).toUpperCase() + item.type.slice(1) + '</b><br />' + results[1].formatted_address
+                  });
+
+                  google.maps.event.addListener(marker, 'click', function () {
+                    infoWindow.open($scope.map, marker);
+                  });
+
+                }
+                else {
+                  window.alert('No results found');
+                }
+              }
+              else {
+                window.alert('Geocoder failed due to: ' + status);
+              }
+            });
+
+          });
+
+        }
+
+      });
+
+    });
+
+  }, function(error){
+    console.log("Could not get location");
+  });
+
+
+
+
+
 })
 
 .controller('LeaderboardCtrl', function($scope, $state) {
@@ -179,7 +284,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
 })
 
-.controller('SpeechRecognitionCtrl', function($scope, $state, Firebase) {
+.controller('SpeechRecognitionCtrl', function($scope, $state, Firebase, $cordovaGeolocation) {
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -189,6 +294,18 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.saveReport = function (user, report) {
     Firebase.saveReport(user, report);
   };
+
+  var latitude,
+      longitude,
+      options = {
+        timeout             : 10000,
+        enableHighAccuracy  : true
+      };
+
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+  });
 
   var commands = {
     'accident *val' : function(val) {
@@ -234,26 +351,35 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     },
     'send' : function() {
       console.log('Action send');
+
       // Check if the report exist
       if ($scope.report) {
         // Save the report to the database
         var user = firebase.auth().currentUser;
-        $scope.saveReport(user, $scope.report);
-        // Depends of the type do one action or one other
-        switch ($scope.report.type) {
-          case 'accident':
-            $state.go('accidents');
-            break;
-          case 'traffic':
-            $state.go('traffic');
-            break;
-          case 'checkpoint':
-            $state.go('checkpoints');
-            break;
-          case 'rank':
-              $state.go('ranks');
-            break;
+
+        $scope.report.location = {
+          'longitude' : longitude,
+          'latitude'  : latitude
         };
+
+        $scope.saveReport(user, $scope.report);
+
+          // Depends of the type do one action or one other
+          switch ($scope.report.type) {
+            case 'accident':
+              $state.go('accidents');
+              break;
+            case 'traffic':
+              $state.go('traffic');
+              break;
+            case 'checkpoint':
+              $state.go('checkpoints');
+              break;
+            case 'rank':
+                $state.go('ranks');
+              break;
+        };
+
         // Clear the object
         $scope.report = null;
       }
@@ -270,13 +396,17 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
+
   var ref = firebase.database().ref('messages');
   ref.orderByChild("type").equalTo("accident").on('value', function(snapshot) {
     $scope.messages = snapshot.val();
     //$scope.$apply();
   });
-  /*
+
+/*
     var d1 = new Date();
+    console.log(d1);
+
     var d2 = new Date();
     //console.log('Hours: ' + d1.getHours());
     var now = d1.getTime();
@@ -289,7 +419,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       //console.log(snapshot.key());
       $scope.messages = snapshot.val();
     });
-    */
+  */
 })
 
 .controller('CheckpointsCtrl', function($scope, $state) {

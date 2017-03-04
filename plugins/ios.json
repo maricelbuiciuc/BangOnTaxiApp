@@ -28,10 +28,19 @@
         "cordova-plugin-geolocation": {
             "GEOLOCATION_USAGE_DESCRIPTION": " ",
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "cordova-plugin-googlemaps": {
+            "API_KEY_FOR_IOS": "AIzaSyAc-bGIBmrhMVnWpnohKz7O2ml718W20pw",
+            "NSLOCATIONWHENINUSEUSAGEDESCRIPTION": "Show your location on the map",
+            "NSLOCATIONALWAYSUSAGEDESCRIPTION": "Trace your location on the map",
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "com.googlemaps.ios": {
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         }
     }

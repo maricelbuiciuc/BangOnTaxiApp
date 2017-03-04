@@ -23,7 +23,8 @@ angular.module('bangOnTaxiApp.services', ['firebase'])
         message   : report.text,
         type      : report.type,
         //created   : firebase.database.ServerValue.TIMESTAMP
-        date      : new Date().getTime()
+        date      : new Date().getTime(),
+        location  : report.location
       });
     }
   }
