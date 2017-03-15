@@ -18,6 +18,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('RegisterCtrl', function($scope, $state, Firebase) {
+  $scope.goBack = function() {
+    $state.go('welcome');
+  };
   $scope.form = {};
   // Check if the user is loged in
   firebase.auth().onAuthStateChanged(function(user) {
@@ -55,6 +58,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('LoginCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('welcome');
+  };
   $scope.form = {};
   // Check if the user is loged in
   firebase.auth().onAuthStateChanged(function(user) {
@@ -134,6 +140,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('RoadInfoCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('mainMenu');
+  };
   $scope.accidents = function () {
     $state.go('accidents');
   };
@@ -156,6 +165,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('UserProfileCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('mainMenu');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -165,6 +177,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('StreetMapCtrl', function($scope, $state, $cordovaGeolocation) {
+  $scope.goBack = function() {
+    $state.go('mainMenu');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -172,14 +187,12 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     $state.go('leaderboard');
   };
 
-
   var options = {
     timeout             : 10000,
     enableHighAccuracy  : true
   };
 
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
-
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
     var mapOptions = {
@@ -197,7 +210,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       ref.on('value', function(snapshot) {
 
         if (snapshot) {
-
           snapshot.forEach(function (childSnapshot) {
 
             var color,
@@ -230,7 +242,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
             };
 
             var geocoder = new google.maps.Geocoder;
-
             geocoder.geocode({'location': location}, function(results, status) {
               if (status === 'OK') {
                 if (results[1]) {
@@ -259,32 +270,29 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
                 window.alert('Geocoder failed due to: ' + status);
               }
             });
-
           });
-
         }
-
       });
-
     });
 
   }, function(error){
     console.log("Could not get location");
   });
-
-
-
-
-
 })
 
 .controller('LeaderboardCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('mainMenu');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
 })
 
 .controller('SpeechRecognitionCtrl', function($scope, $state, Firebase, $cordovaGeolocation) {
+  $scope.goBack = function() {
+    $state.go('mainMenu');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -390,6 +398,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('AccidentsCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('roadInfo');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -423,6 +434,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('CheckpointsCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('roadInfo');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -436,6 +450,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('RanksCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('roadInfo');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -449,6 +466,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('TrafficCtrl', function($scope, $state) {
+  $scope.goBack = function() {
+    $state.go('roadInfo');
+  };
   $scope.goHome = function() {
     $state.go('mainMenu');
   };

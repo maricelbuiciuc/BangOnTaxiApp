@@ -1,10 +1,18 @@
-<ion-view view-title="Street Map">
+<ion-view ion-nav-title="navTitle">
+<ion-header-bar class="bar-positive" align-title="center">
+    <button class="button icon ion-ios-arrow-back" ng-click="goBack()"></button>
+    <h1 class="title">BangOn Taxi App</h1>
+  </ion-header-bar>
+
   <ion-content class="padding">
     <h2 class="title">Street Map</h2>
+    <div id="map" data-tap-disabled="true"></div>
 
   </ion-content>
+
+  <div class="bar bar-footer bar-assertive">
+    <button class="button icon ion-home" ng-click="goHome()"></button>
+    <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
+  </div>
+
 </ion-view>
-<div class="bar bar-footer bar-assertive">
-     <button class="button icon ion-home" ng-click="goHome()"></button>
-      <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
-</div>

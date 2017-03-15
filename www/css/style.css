@@ -1,4 +1,5 @@
 /* Empty. Add your own CSS if you like */
+
 .title {
 text-align: center;
 }
@@ -6,7 +7,7 @@ h4{
 text-align: center;
 }
 .scroll-content{
-  background-color:#999666;
+  background-color:orange;
   height: 100%;
 }
 .list{
@@ -21,7 +22,6 @@ text-align: center;
 .welcomeButtons{
   margin-top: 300px;
 }
-
 .scroll {
     height: 100%;
 }

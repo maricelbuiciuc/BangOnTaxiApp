@@ -1,17 +1,22 @@
-<ion-view view-title="Road Info">
+<ion-view ion-nav-title="navTitle">
+  <ion-header-bar class="bar-positive" align-title="center">
+    <button class="button icon ion-ios-arrow-back" ng-click="goBack()"></button>
+    <h1 class="title">BangOn Taxi App</h1>
+  </ion-header-bar>
+
   <ion-content class="padding">
     <h2 class="title">Road Info</h2>
 <div class="roadInfoButtons">
-    <button class="button button-block button-positive" ng-click="accidents()">
+    <button class="button button-block button-dark" ng-click="accidents()">
       Accidents
     </button>
-    <button class="button button-block button-positive" ng-click="traffic()">
+    <button class="button button-block button-dark" ng-click="traffic()">
       Traffic
     </button>
-    <button class="button button-block button-positive" ng-click="checkpoints()">
+    <button class="button button-block button-dark" ng-click="checkpoints()">
       Checkpoints
     </button>
-    <button class="button button-block button-positive" ng-click="ranks()">
+    <button class="button button-block button-dark" ng-click="ranks()">
       Ranks
     </button>
 </div>
