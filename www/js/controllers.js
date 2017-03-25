@@ -57,11 +57,15 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
    };
 })
 
-.controller('LoginCtrl', function($scope, $state) {
+.controller('LoginCtrl', function($scope, $state, $ionicPopup, $timeout) {
+
   $scope.goBack = function() {
     $state.go('welcome');
+
   };
+
   $scope.form = {};
+
   // Check if the user is loged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -73,33 +77,51 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 
   $scope.login = function(form) {
+
     if (form.$valid) {
-      var email = $scope.form.email;
-      var password = $scope.form.password;
-      console.log('Email: ' + email);
-      console.log('Password: ' + password);
+
+      var email = $scope.form.email,
+          password = $scope.form.password;
+
       firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // ...
-        console.log('errorCode: ' + errorCode);
-        console.log('errorMessage: ' + errorMessage);
+
+        // Error
+        var alertError = $ionicPopup.alert({
+          title: 'Login Error',
+          template: error.message
+        });
+
+        /*$timeout(function() {
+          alertError.close();
+        }, 3000);*/
+
       });
+
     }
+
   };
 })
 
 .controller('MainMenuCtrl', function($scope, $state, $http) {
+
   // Get the current user
-  var user = firebase.auth().currentUser;
-  if (user) {
-    // User is signed in.
-    console.log('USER: ' + JSON.stringify(user));
-    $scope.user = {
-      'email' : user.email
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var ref = firebase.database().ref('users/' + user.uid);
+      ref.on('value', function(snapshot) {
+
+        var obj = snapshot.val();
+
+        $scope.user = {
+          name      : obj.name,
+          email     : obj.email
+        }
+
+      });
+
     }
-  }
+  });
 
   $scope.goHome = function() {
     $state.go('mainMenu');
@@ -164,16 +186,136 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
 })
 
-.controller('UserProfileCtrl', function($scope, $state) {
+.controller('UserProfileCtrl', function($scope, $state, $ionicPopup, $timeout) {
+
+  $scope.showDetailsForm = true;
+  $scope.showPasswordForm = false;
+
+  // Get the current user
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var ref = firebase.database().ref('users/' + user.uid);
+      ref.on('value', function(snapshot) {
+
+        var obj = snapshot.val();
+
+        $scope.form = {
+          id        : user.uid,
+          name      : obj.name,
+          surname   : obj.surname,
+          email     : obj.email,
+          licence   : obj.licence
+        }
+
+      });
+
+    }
+  });
+
+  $scope.update = function(form) {
+    if (form.$valid) {
+
+      var id = $scope.form.id;
+      var name = $scope.form.name;
+      var surname = $scope.form.surname;
+      var email = $scope.form.email;
+      var licence = $scope.form.licence;
+
+      firebase.database().ref('users/' + id).set({
+        name: name,
+        surname: surname,
+        email: email,
+        licence : licence
+      });
+
+      // Success message
+      var alert1 = $ionicPopup.alert({
+        title: 'Success',
+        template: 'Details updated successfully'
+      });
+
+      $timeout(function() {
+        alert1.close(); //close the popup after 3 seconds for some reason
+      }, 3000);
+
+    }
+  };
+
+  $scope.changePassword = function(form) {
+    if (form.$valid) {
+
+      var password = $scope.form.password,
+          password2 = $scope.form.password2;
+
+      if (password === password2) {
+        var user = firebase.auth().currentUser;
+
+        user.updatePassword($scope.form.password).then(function() {
+
+          // Success
+          var alertSuccess = $ionicPopup.alert({
+            title: 'Success',
+            template: 'Update successful.'
+          });
+
+          $timeout(function() {
+            alertSuccess.close();
+          }, 3000);
+
+        }, function(error) {
+
+          // Error
+          var alertError = $ionicPopup.alert({
+            title: 'Error',
+            template: error.message
+          });
+
+          $timeout(function() {
+            alertError.close();
+          }, 3000);
+
+        });
+      }
+      else {
+
+        // Error
+        var alert2 = $ionicPopup.alert({
+          title: 'Error',
+          template: 'The values must be the same'
+        });
+
+        $timeout(function() {
+          alert2.close(); //close the popup after 3 seconds for some reason
+        }, 3000);
+
+      }
+
+    }
+  };
+
+  $scope.displayPasswordForm = function() {
+    $scope.showDetailsForm = false;
+    $scope.showPasswordForm = true;
+  };
+
+  $scope.displayDetailsForm = function() {
+    $scope.showDetailsForm = true;
+    $scope.showPasswordForm = false;
+  };
+
   $scope.goBack = function() {
     $state.go('mainMenu');
   };
+
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
+
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
+
 })
 
 .controller('StreetMapCtrl', function($scope, $state, $cordovaGeolocation) {
@@ -393,6 +535,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       }
     }
   }
+
   annyang.addCommands(commands);
   annyang.start();
 })
@@ -413,8 +556,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     $scope.messages = snapshot.val();
     //$scope.$apply();
   });
-
-/*
+    /*
     var d1 = new Date();
     console.log(d1);
 
@@ -430,7 +572,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       //console.log(snapshot.key());
       $scope.messages = snapshot.val();
     });
-  */
+    */
 })
 
 .controller('CheckpointsCtrl', function($scope, $state) {
