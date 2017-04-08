@@ -9,6 +9,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       $state.go('mainMenu');
     }
   });
+
   $scope.register = function () {
     $state.go('register');
   };
@@ -58,10 +59,8 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('LoginCtrl', function($scope, $state, $ionicPopup, $timeout) {
-
   $scope.goBack = function() {
     $state.go('welcome');
-
   };
 
   $scope.form = {};
@@ -77,12 +76,9 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 
   $scope.login = function(form) {
-
     if (form.$valid) {
-
       var email = $scope.form.email,
           password = $scope.form.password;
-
       firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
 
         // Error
@@ -94,11 +90,8 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
         /*$timeout(function() {
           alertError.close();
         }, 3000);*/
-
       });
-
     }
-
   };
 })
 
@@ -110,16 +103,13 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       // User is signed in.
       var ref = firebase.database().ref('users/' + user.uid);
       ref.on('value', function(snapshot) {
-
         var obj = snapshot.val();
 
         $scope.user = {
           name      : obj.name,
           email     : obj.email
         }
-
       });
-
     }
   });
 
@@ -129,7 +119,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-
   $scope.userProfile = function () {
     $state.go('userProfile');
   };
@@ -177,7 +166,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.ranks = function () {
     $state.go('ranks');
   };
-
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -187,7 +175,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
 })
 
 .controller('UserProfileCtrl', function($scope, $state, $ionicPopup, $timeout) {
-
   $scope.showDetailsForm = true;
   $scope.showPasswordForm = false;
 
@@ -197,9 +184,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       // User is signed in.
       var ref = firebase.database().ref('users/' + user.uid);
       ref.on('value', function(snapshot) {
-
         var obj = snapshot.val();
-
         $scope.form = {
           id        : user.uid,
           name      : obj.name,
@@ -207,15 +192,12 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
           email     : obj.email,
           licence   : obj.licence
         }
-
       });
-
     }
   });
 
   $scope.update = function(form) {
     if (form.$valid) {
-
       var id = $scope.form.id;
       var name = $scope.form.name;
       var surname = $scope.form.surname;
@@ -238,28 +220,24 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       $timeout(function() {
         alert1.close(); //close the popup after 3 seconds for some reason
       }, 3000);
-
     }
   };
 
   $scope.changePassword = function(form) {
     if (form.$valid) {
-
       var password = $scope.form.password,
-          password2 = $scope.form.password2;
-
-      if (password === password2) {
-        var user = firebase.auth().currentUser;
-
+              password2 = $scope.form.password2;
+          if (password === password2) {
+      var user = firebase.auth().currentUser;
         user.updatePassword($scope.form.password).then(function() {
 
           // Success
-          var alertSuccess = $ionicPopup.alert({
-            title: 'Success',
-            template: 'Update successful.'
-          });
+      var alertSuccess = $ionicPopup.alert({
+        title: 'Success',
+        template: 'Update successful.'
+      });
 
-          $timeout(function() {
+      $timeout(function() {
             alertSuccess.close();
           }, 3000);
 
@@ -288,9 +266,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
         $timeout(function() {
           alert2.close(); //close the popup after 3 seconds for some reason
         }, 3000);
-
       }
-
     }
   };
 
@@ -315,7 +291,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-
 })
 
 .controller('StreetMapCtrl', function($scope, $state, $cordovaGeolocation) {
@@ -429,6 +404,58 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
+
+  var leaderboard = [];
+  var ref = firebase.database().ref('messages');
+
+  ref.on('value', function(snapshot) {
+    $scope.ranking = [];
+
+    snapshot.forEach(function (childSnapshot) {
+      var item = childSnapshot.val();
+
+      console.log('item', item);
+
+      var email = item.email;
+      console.log('email', email);
+
+      if (leaderboard[email]) {
+        //var val = leaderboard[email];
+        leaderboard[email] += 1;
+        console.log('exist');
+        console.log('leaderboard[email]: ', leaderboard[email]);
+      }
+      else {
+        leaderboard[email] = 1;
+        console.log('no exist');
+        console.log('leaderboard[email]: ', leaderboard[email]);
+      }
+
+    });
+
+    console.log('leaderboard: ', leaderboard);
+
+    //$scope.ranking = leaderboard;
+
+    for (var key in leaderboard) {
+      let value = leaderboard[key];
+      console.log(value);
+
+      $scope.ranking.push({
+        email: key,
+        messages: value
+      });
+    }
+
+    /*forEach (leaderboard as key => value) {
+
+      console.log('key: ' + key);
+      console.log('value: ' + value);
+
+    }*/
+
+  });
+
 })
 
 .controller('SpeechRecognitionCtrl', function($scope, $state, Firebase, $cordovaGeolocation) {
@@ -551,28 +578,35 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     $state.go('leaderboard');
   };
 
+  var today = new Date();
   var ref = firebase.database().ref('messages');
-  ref.orderByChild("type").equalTo("accident").on('value', function(snapshot) {
-    $scope.messages = snapshot.val();
-    //$scope.$apply();
-  });
-    /*
-    var d1 = new Date();
-    console.log(d1);
 
-    var d2 = new Date();
-    //console.log('Hours: ' + d1.getHours());
-    var now = d1.getTime();
-    d2.setHours(d2.getHours() - 2);
-    //console.log('Hours: ' + d2.getHours());
-    var twoHoursAgo = d2.getTime();
-    console.log('Start date: ' + now);
-    console.log('End date: ' + twoHoursAgo);
-    ref.orderByChild('date').startAt(now).endAt(twoHoursAgo).on('value', function(snapshot) {
-      //console.log(snapshot.key());
-      $scope.messages = snapshot.val();
+  ref.orderByChild("type").equalTo("accident").on('value', function(snapshot) {
+    $scope.messages = [];
+
+    snapshot.forEach(function (childSnapshot) {
+      var item = childSnapshot.val();
+      var date = new Date(item.date);
+
+      if (
+        today.getDate() == date.getDate() &&
+        today.getMonth() == date.getMonth() &&
+        today.getFullYear() == date.getFullYear()
+      ) {
+        item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+        $scope.messages.push(item);
+      }
     });
-    */
+
+    if ($scope.messages.length == 0) {
+      $scope.messages.push({
+        email: 'No messages for today.',
+        date: '',
+        message: ''
+      });
+    }
+
+  });
 })
 
 .controller('CheckpointsCtrl', function($scope, $state) {
@@ -585,9 +619,35 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-    var ref = firebase.database().ref('messages');
-    ref.orderByChild("type").equalTo("checkpoint").on('value', function(snapshot) {
-      $scope.messages = snapshot.val();
+
+  var today = new Date();
+  var ref = firebase.database().ref('messages');
+
+  ref.orderByChild("type").equalTo("checkpoint").on('value', function(snapshot) {
+    $scope.messages = [];
+
+    snapshot.forEach(function (childSnapshot) {
+      var item = childSnapshot.val();
+      var date = new Date(item.date);
+
+      if (
+        today.getDate() == date.getDate() &&
+        today.getMonth() == date.getMonth() &&
+        today.getFullYear() == date.getFullYear()
+      ) {
+        item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+        $scope.messages.push(item);
+      }
+    });
+
+    if ($scope.messages.length == 0) {
+      $scope.messages.push({
+        email: 'No messages for today.',
+        date: '',
+        message: ''
+      });
+    }
+
   });
 })
 
@@ -601,9 +661,35 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
+
+  var today = new Date();
   var ref = firebase.database().ref('messages');
+
   ref.orderByChild("type").equalTo("rank").on('value', function(snapshot) {
-    $scope.messages = snapshot.val();
+    $scope.messages = [];
+
+    snapshot.forEach(function (childSnapshot) {
+      var item = childSnapshot.val();
+      var date = new Date(item.date);
+
+      if (
+        today.getDate() == date.getDate() &&
+        today.getMonth() == date.getMonth() &&
+        today.getFullYear() == date.getFullYear()
+      ) {
+        item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+        $scope.messages.push(item);
+      }
+    });
+
+    if ($scope.messages.length == 0) {
+      $scope.messages.push({
+        email: 'No messages for today.',
+        date: '',
+        message: ''
+      });
+    }
+
   });
 })
 
@@ -617,10 +703,34 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
+
+  var today = new Date();
   var ref = firebase.database().ref('messages');
+
   ref.orderByChild("type").equalTo("traffic").on('value', function(snapshot) {
-    $scope.messages = snapshot.val();
-    //$scope.$apply();
+    $scope.messages = [];
+
+    snapshot.forEach(function (childSnapshot) {
+      var item = childSnapshot.val();
+      var date = new Date(item.date);
+
+      if (
+        today.getDate() == date.getDate() &&
+        today.getMonth() == date.getMonth() &&
+        today.getFullYear() == date.getFullYear()
+      ) {
+        item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
+        $scope.messages.push(item);
+      }
+    });
+
+    if ($scope.messages.length == 0) {
+      $scope.messages.push({
+        email: 'No messages for today.',
+        date: '',
+        message: ''
+      });
+    }
+
   });
-//  $state.go($state.current, {}, {reload: true});
 });

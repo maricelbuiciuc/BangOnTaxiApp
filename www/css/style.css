@@ -20,7 +20,7 @@ text-align: center;
   margin-top: 200px;
 }
 .welcomeButtons{
-  margin-top: 300px;
+  margin-top: 150px;
 }
 .scroll {
     height: 100%;
@@ -41,4 +41,14 @@ text-align: center;
 }
 i.large-icon {
   font-size: 90px;
+}
+
+i.small-icon {
+  font-size: 50px;
+}
+
+.logo_container {
+  margin: 0 auto;
+  width: 70%;
+  padding: 10px;
 }

@@ -5,15 +5,16 @@
   </ion-header-bar>
   <ion-content class="padding">
     <h2 class="title">Traffic</h2>
-  <ion-list>
-    <ion-item ng-repeat="message in messages" class="item-text-wrap">
-      {{ message.email }}<br>
-      {{ message.message }}
-    </ion-item>
-  </ion-list>
-</ion-content>
+    <ion-list>
+      <ion-item ng-repeat="message in messages" class="item-text-wrap">
+        {{ message.email }}<br>
+        {{ message.date }}<br>
+        {{ message.message }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>
-<div class="bar bar-footer bar-assertive">
+<div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
 </div>

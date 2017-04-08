@@ -24,7 +24,7 @@
         </label>
       </div>
 
-      <button type="submit" class="button button-block button-positive" ng-disabled="userProfileForm.$invalid" ng-click="userProfileForm.$valid && update(userProfileForm)">
+      <button type="submit" class="button button-block button-dark" ng-disabled="userProfileForm.$invalid" ng-click="userProfileForm.$valid && update(userProfileForm)">
         Update Profile
       </button>
     </form>
@@ -40,22 +40,22 @@
         </label>
       </div>
 
-      <button type="submit" class="button button-block button-positive" ng-disabled="passwordForm.$invalid" ng-click="passwordForm.$valid && changePassword(passwordForm)">
+      <button type="submit" class="button button-block button-dark" ng-disabled="passwordForm.$invalid" ng-click="passwordForm.$valid && changePassword(passwordForm)">
         Update Password
       </button>
     </form>
 
-    <button ng-if="!showPasswordForm" class="button button-block button-positive" ng-click="displayPasswordForm()">
+    <button ng-if="!showPasswordForm" class="button button-block button-dark" ng-click="displayPasswordForm()">
       Change Password
     </button>
 
-    <button ng-if="!showDetailsForm" class="button button-block button-positive" ng-click="displayDetailsForm()">
+    <button ng-if="!showDetailsForm" class="button button-block button-dark" ng-click="displayDetailsForm()">
       Change Details
     </button>
 
   </ion-content>
 </ion-view>
-<div class="bar bar-footer bar-assertive">
+<div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
 </div>
