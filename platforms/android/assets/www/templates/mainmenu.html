@@ -5,14 +5,7 @@
 
   <ion-content class="padding">
     <h2 class="title">Main Menu</h2>
-    <h4>{{ user.email }}</h4>
-
-  <!--
-  <ion-refresher
-    pulling-text="Pull to refresh..."
-    on-refresh="doRefresh()">
-  </ion-refresher>
--->
+    <h4>Hi {{ user.name }}!</h4>
 
     <div class="mainMenuButtons">
         <button class="button button-block button-dark" ng-click="streetMap()">
@@ -36,7 +29,7 @@
     </div>
   </ion-content>
 </ion-view>
-<div class="bar bar-footer bar-assertive">
+<div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
 </div>

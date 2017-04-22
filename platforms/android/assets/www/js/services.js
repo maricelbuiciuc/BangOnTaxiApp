@@ -16,29 +16,17 @@ angular.module('bangOnTaxiApp.services', ['firebase'])
       console.log('User: ' + JSON.stringify(user));
       console.log('Report: ' + JSON.stringify(report));
 
+      console.log('Date: ' + new Date());
+
       var newMessage = firebase.database().ref('messages').push();
       newMessage.set({
         uid       : user.uid,
         email     : user.email,
         message   : report.text,
         type      : report.type,
-        //created   : firebase.database.ServerValue.TIMESTAMP
         date      : new Date().getTime(),
         location  : report.location
       });
     }
   }
-/*
-  $scope.doRefresh = function() {
-     $http.get('/new-items')
-      .success(function(newItems) {
-        $scope.items = newItems;
-      })
-      .finally(function() {
-        // Stop the ion-refresher from spinning
-        $scope.$broadcast('scroll.refreshComplete');
-      });
-   };
-*/
-
 });

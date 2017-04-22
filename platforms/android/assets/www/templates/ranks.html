@@ -1,19 +1,20 @@
 <ion-view ion-nav-title="navTitle">
   <ion-header-bar class="bar-positive" align-title="center">
-    <button class="button icon ion-ios-arrow-back" ng-click="goBack()"></button>
+    <button class="button button-icon icon  ion-chevron-left" ng-click="goBack()" ></button>
     <h1 class="title">BangOn Taxi App</h1>
   </ion-header-bar>
   <ion-content class="padding">
     <h2 class="title">Ranks</h2>
-  <ion-list>
-    <ion-item ng-repeat="message in messages" class="item-text-wrap">
-      {{ message.email }}<br>
-      {{ message.message }}
-    </ion-item>
-  </ion-list>
-</ion-content>
+    <ion-list>
+      <ion-item ng-repeat="message in messages" class="item-text-wrap">
+        {{ message.email }}<br>
+        {{ message.date }}<br>
+        {{ message.message }}
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>
-<div class="bar bar-footer bar-assertive">
+<div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
 </div>
