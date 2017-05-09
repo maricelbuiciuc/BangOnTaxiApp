@@ -10,7 +10,25 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         },
+        "cordova-plugin-crosswalk-webview": {
+            "XWALK_VERSION": "21+",
+            "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+            "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+            "XWALK_MODE": "embedded",
+            "XWALK_MULTIPLEAPK": "true",
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
         "cordova-plugin-device": {
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "cordova-plugin-geolocation": {
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "cordova-plugin-googlemaps": {
+            "API_KEY_FOR_ANDROID": "AIzaSyAc-bGIBmrhMVnWpnohKz7O2ml718W20pw",
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "cordova-plugin-media": {
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         },
         "cordova-plugin-splashscreen": {
@@ -24,13 +42,16 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
-        },
-        "cordova-plugin-geolocation": {
-            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         }
     },
     "dependent_plugins": {
+        "com.googlemaps.ios": {
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
+        },
+        "cordova-plugin-file": {
             "PACKAGE_NAME": "com.ionicframework.bangontaxiapp522841"
         }
     }

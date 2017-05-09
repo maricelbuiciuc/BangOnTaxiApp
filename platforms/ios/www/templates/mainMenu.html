@@ -1,0 +1,35 @@
+<ion-view ion-nav-title="navTitle">
+  <ion-header-bar class="bar-positive" align-title="center">
+    <h1 class="title">BangOn Taxi App</h1>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <h2 class="title">Main Menu</h2>
+    <h4>Hi {{ user.name }}!</h4>
+
+    <div class="mainMenuButtons">
+        <button class="button button-block button-dark" ng-click="streetMap()">
+          Street Map
+        </button>
+        <button class="button button-block button-dark" ng-click="roadInfo()">
+          Road Info
+        </button>
+        <button class="button button-block button-dark" ng-click="userProfile()">
+          User Profile
+        </button>
+        <button class="button button-block button-dark" ng-click="leaderboard()">
+          Leaderboard
+        </button>
+        <button class="button button-block button-dark" ng-click="speechRecognition()">
+          Speech Recognition
+        </button>
+        <button class="button button-block button-dark" ng-click="logOut()">
+          Log me Out
+        </button>
+    </div>
+  </ion-content>
+</ion-view>
+<div class="bar bar-footer bar-positive">
+     <button class="button icon ion-home" ng-click="goHome()"></button>
+      <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
+</div>

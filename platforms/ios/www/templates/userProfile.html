@@ -1,0 +1,61 @@
+<ion-view ion-nav-title="navTitle">
+  <ion-header-bar class="bar-positive" align-title="center">
+    <button class="button button-icon icon  ion-chevron-left" ng-click="goBack()" ></button>
+    <h1 class="title">BangOn Taxi App</h1>
+  </ion-header-bar>
+
+  <ion-content class="padding">
+    <h2 class="title">User Profile</h2>
+
+    <form ng-if="showDetailsForm" name="userProfileForm" novalidate="">
+      <input type="hidden" ng-model="form.id" required>
+      <div class="list">
+        <label class="item item-input">
+           <input type="text" ng-model="form.name" placeholder="Enter your Name" required>
+        </label>
+        <label class="item item-input">
+           <input type="text" ng-model="form.surname" placeholder="Enter your Surname" required>
+        </label>
+        <label class="item item-input">
+          <input type="email" name="email" ng-model="form.email" placeholder="Enter your Email" readonly>
+        </label>
+        <label class="item item-input">
+          <input type="text" name="licence" ng-model="form.licence" placeholder="Enter your Licence Number">
+        </label>
+      </div>
+
+      <button type="submit" class="button button-block button-dark" ng-disabled="userProfileForm.$invalid" ng-click="userProfileForm.$valid && update(userProfileForm)">
+        Update Profile
+      </button>
+    </form>
+
+    <form ng-if="showPasswordForm" name="passwordForm" novalidate="">
+      <input type="hidden" ng-model="form.id" required>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" ng-model="form.password" placeholder="Enter your new Password" required>
+        </label>
+        <label class="item item-input">
+          <input type="text" ng-model="form.password2" placeholder="Re-Enter your new Password" required>
+        </label>
+      </div>
+
+      <button type="submit" class="button button-block button-dark" ng-disabled="passwordForm.$invalid" ng-click="passwordForm.$valid && changePassword(passwordForm)">
+        Update Password
+      </button>
+    </form>
+
+    <button ng-if="!showPasswordForm" class="button button-block button-dark" ng-click="displayPasswordForm()">
+      Change Password
+    </button>
+
+    <button ng-if="!showDetailsForm" class="button button-block button-dark" ng-click="displayDetailsForm()">
+      Change Details
+    </button>
+
+  </ion-content>
+</ion-view>
+<div class="bar bar-footer bar-positive">
+     <button class="button icon ion-home" ng-click="goHome()"></button>
+      <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>
+</div>
