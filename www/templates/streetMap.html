@@ -1,15 +1,18 @@
 <ion-view ion-nav-title="navTitle">
 <ion-header-bar class="bar-positive" align-title="center">
+
+<!-- Below is the arrow back button -->
     <button class="button button-icon icon  ion-chevron-left" ng-click="goBack()" ></button>
     <h1 class="title">BangOn Taxi App</h1>
   </ion-header-bar>
-
   <ion-content class="padding">
     <h2 class="title">Street Map</h2>
-    <div id="map" data-tap-disabled="true"></div>
 
+<!-- Below is the div for the Google map -->
+    <div id="map" data-tap-disabled="true"></div>
   </ion-content>
 
+<!-- Below is the footer div with the two buttons "Home" and "Leaderboard" -->
   <div class="bar bar-footer bar-positive">
     <button class="button icon ion-home" ng-click="goHome()"></button>
     <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>

@@ -5,8 +5,10 @@
 
   <ion-content class="padding">
     <h2 class="title">Main Menu</h2>
+<!-- Below we display the name of current user -->
     <h4>Hi {{ user.name }}!</h4>
 
+<!-- Below is the div with all buttons -->
     <div class="mainMenuButtons">
         <button class="button button-block button-dark" ng-click="streetMap()">
           Street Map
@@ -29,6 +31,8 @@
     </div>
   </ion-content>
 </ion-view>
+
+<!-- Below is the footer div with the two buttons "Home" and "Leaderboard" -->
 <div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>

@@ -1,5 +1,7 @@
 <ion-view ion-nav-title="navTitle">
   <ion-header-bar class="bar-positive" align-title="center">
+
+<!-- Below is the arrow back button -->
     <button class="button button-icon icon  ion-chevron-left" ng-click="goBack()" ></button>
     <h1 class="title">BangOn Taxi App</h1>
   </ion-header-bar>
@@ -7,6 +9,7 @@
   <ion-content class="padding">
     <h2 class="title">User Profile</h2>
 
+<!-- Below is the form for Update Details such as Name, Surname, Licence Number and email is read only -->
     <form ng-if="showDetailsForm" name="userProfileForm" novalidate="">
       <input type="hidden" ng-model="form.id" required>
       <div class="list">
@@ -24,11 +27,13 @@
         </label>
       </div>
 
+<!-- Below is the submit button for "Update Profile" -->
       <button type="submit" class="button button-block button-dark" ng-disabled="userProfileForm.$invalid" ng-click="userProfileForm.$valid && update(userProfileForm)">
         Update Profile
       </button>
     </form>
 
+<!-- Below is the form for Update Password -->
     <form ng-if="showPasswordForm" name="passwordForm" novalidate="">
       <input type="hidden" ng-model="form.id" required>
       <div class="list">
@@ -40,21 +45,25 @@
         </label>
       </div>
 
+<!-- Below is the submit button for "Update Password" -->
       <button type="submit" class="button button-block button-dark" ng-disabled="passwordForm.$invalid" ng-click="passwordForm.$valid && changePassword(passwordForm)">
         Update Password
       </button>
     </form>
 
+<!-- Below is the button option for "Change Password" -->
     <button ng-if="!showPasswordForm" class="button button-block button-dark" ng-click="displayPasswordForm()">
       Change Password
     </button>
 
+<!-- Below is the button option for "Change Details" -->
     <button ng-if="!showDetailsForm" class="button button-block button-dark" ng-click="displayDetailsForm()">
       Change Details
     </button>
-
   </ion-content>
 </ion-view>
+
+<!-- Below is the footer div with the two buttons "Home" and "Leaderboard" -->
 <div class="bar bar-footer bar-positive">
      <button class="button icon ion-home" ng-click="goHome()"></button>
       <button class="button icon ion-trophy pull-right" ng-click="goLeaderboard()"></button>

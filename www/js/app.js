@@ -1,12 +1,11 @@
-//this the main file with all the components 
+//This is the main file with all components for the app
 angular.module('bangOnTaxiApp', ['ionic', 'ngCordova', 'bangOnTaxiApp.controllers', 'bangOnTaxiApp.services', 'firebase'])
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     if(window.cordova && window.cordova.plugins.Keyboard) {
 
-      // for form inputs)
+// This is for the form inputs
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if(window.StatusBar) {
@@ -16,11 +15,11 @@ angular.module('bangOnTaxiApp', ['ionic', 'ngCordova', 'bangOnTaxiApp.controller
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
+// Ionic uses AngularUI Router which uses the concept of states
+// Learn more here: https://github.com/angular-ui/ui-router
 
 
-//this are the different section of the application and for each one we are different URLs, HTML templates and controllers
+//These are the some sections of the application and for each we have different URLs, HTML templates and Controllers
   $stateProvider
     .state('welcome', {
       url: '/welcome',
@@ -87,6 +86,6 @@ angular.module('bangOnTaxiApp', ['ionic', 'ngCordova', 'bangOnTaxiApp.controller
       templateUrl: 'templates/traffic.html',
       controller: 'TrafficCtrl'
     });
-  // if none of the above states are matched, use this as the fallback
+  // If none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/welcome');
 });
