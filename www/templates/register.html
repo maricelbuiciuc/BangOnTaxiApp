@@ -1,19 +1,15 @@
 <ion-view ion-nav-title="navTitle">
   <ion-header-bar class="bar-positive" align-title="center">
-
-<!-- Below is the arrow back button -->
     <button class="button button-icon icon  ion-chevron-left" ng-click="goBack()" ></button>
     <h1 class="title">BangOn Taxi App</h1>
   </ion-header-bar>
   <ion-content class="padding">
     <h2 class="title">Register</h2>
 
-<!-- Below is the logo container with image -->
     <div class="logo_container">
       <img src="./img/logo_white1.png">
     </div>
 
-<!-- Below is the register form -->
     <form name="registerForm" novalidate="">
       <div class="list">
         <label class="item item-input">
@@ -27,7 +23,6 @@
         </label>
       </div>
 
-<!-- Below is the submit button for "Register" -->
       <button type="submit" class="button button-block button-dark" ng-disabled="registerForm.$invalid" ng-click="registerForm.$valid && register(registerForm)">
         Register
       </button>
