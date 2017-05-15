@@ -1,18 +1,18 @@
 angular.module('bangOnTaxiApp.services', ['firebase'])
-//this our firebase service
+//This is our firebase service
 .factory('Firebase', function($http, $q) {
   return {
-    //that funcion here is to save the licence to the firebase
+//That function here is to save the licence to the firebase
     saveLicence: function(id, email, licence) {
-//we are saving the email and licence from the user id
+//We are saving the email and licence from the user id
       firebase.database().ref('users/' + id).set({
         email   : email,
         licence : licence
       });
     },
-//this function is to save one user message to the database
+    
+//This function is to save on user's messages to the database
     saveReport: function(user, report) {
-
       var newMessage = firebase.database().ref('messages').push();
       newMessage.set({
         uid       : user.uid,

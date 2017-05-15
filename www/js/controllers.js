@@ -1,17 +1,17 @@
-//the file controller is controling the app
+//This is the file controller which is manage the entire app controllers
 angular.module('bangOnTaxiApp.controllers', ['firebase'])
-//this controls welcome page
+//This controller is manage the welcome activity
 .controller('WelcomeCtrl', function($scope, $state) {
 // this Checks into the app if the user is loged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-// if User is signed in succesfuly then is redirected to the main menu actvity.
+// If the User is signed in successfully then is redirected to the main menu actvity
       console.log('User is signed in!');
       console.log('USER: ' + JSON.stringify(user));
       $state.go('mainMenu');
     }
   });
-//two buttons one to go to register activity and one for login activity
+//Below are two buttons one to go to the register activity and one for login activity
   $scope.register = function () {
     $state.go('register');
   };
@@ -19,16 +19,17 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     $state.go('login');
   };
 })
-//this register controller that controls register activity
+
+//Below is the "Register" controller that manages "register" activity
 .controller('RegisterCtrl', function($scope, $state, Firebase) {
-// arrow from top that brings user back
+// This is for the arrow from top that brings user back
   $scope.goBack = function() {
-//redirect's user to welcome activity
+//That redirect's user to welcome activity
     $state.go('welcome');
   };
-//this is empty object for the form
+//This is the empty object for the form
   $scope.form = {};
-//this is register button when is clicket creates user name and password
+//This is the register button and when is clicket creates user name and password
   $scope.register = function (form) {
     if (form.$valid) {
       var email     = $scope.form.email,
@@ -40,16 +41,16 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(function(user) {
             var user = firebase.auth().currentUser;
-// Save the Licence to the database.
+// Save the Licence number to the database.
             console.log('USER: ' + JSON.stringify(user));
-//we also added and updated the firebase with the Taxi licence Number
+//We also added and updated the firebase with the Taxi licence Number
             Firebase.saveLicence(user.uid, user.email, licence);
         },
-        function(error) {
-// here the is to Handle Errors.
+        function(error) {S
+// Below is the code that manages the Errors
             var errorCode = error.code;
             var errorMessage = error.message;
-            // @TODO show errors to the user
+            // @TODO Below is showing the errors to the user
             console.log('errorCode: ' + errorCode);
             console.log('errorMessage: ' + errorMessage);
         });
@@ -57,25 +58,26 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
    };
 })
 
+//Below is the "Login" controller that manages "login" activity
 .controller('LoginCtrl', function($scope, $state, $ionicPopup, $timeout) {
   $scope.goBack = function() {
     $state.go('welcome');
   };
   $scope.form = {};
-// Check if the user is loged in
+// Below we check if the user is loged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-//if already loged in redirect him to main menu
+//If the user is already loged in redirect's him to the main menu
       $state.go('mainMenu');
     }
   });
-//this for the login button when a user try to log in
+//This is for the login button when a user try to log in
   $scope.login = function(form) {
     if (form.$valid) {
       var email = $scope.form.email,
           password = $scope.form.password;
       firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-// Error
+// If details are not valid an Error will be displayed
         var alertError = $ionicPopup.alert({
           title: 'Login Error',
           template: error.message
@@ -85,11 +87,12 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
 })
 
+//Below is the "Main Menu" controller that manages "main menu" activity
 .controller('MainMenuCtrl', function($scope, $state, $http) {
 // Get the current user and display the name and email
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-// User is signed in.
+// This shows if user is signed in
       var ref = firebase.database().ref('users/' + user.uid);
       ref.on('value', function(snapshot) {
         var obj = snapshot.val();
@@ -100,7 +103,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       });
     }
   });
-//these are buttons on the main menu
+//These are the function for the buttons on the main menu activity
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
@@ -127,18 +130,20 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
   $scope.logOut = function() {
     firebase.auth().signOut().then(function() {
-// Sign-out successful.
+// This shows when Sign-out was successful
       console.log('Sign-out successful!');
       $state.go('welcome');
     },
     function(error) {
-// An error happened.
+// When an error was happened
       console.log('An error happened: ' + JSON.stringify(error));
     });
   }
 })
 
+//Below is the "Road Info" controller that manages "road info" activity
 .controller('RoadInfoCtrl', function($scope, $state) {
+//These are the functions for the buttons on the Road Info activity
   $scope.goBack = function() {
     $state.go('mainMenu');
   };
@@ -162,15 +167,16 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   };
 })
 
+//Below is the "User Profile" controller that manages "user profile" activity
 .controller('UserProfileCtrl', function($scope, $state, $ionicPopup, $timeout) {
-//by default we the details form wit this code
+//By default we display the details form with this code
   $scope.showDetailsForm = true;
   $scope.showPasswordForm = false;
-// we are Geting  the current user and display on the detail user form
+// We are geting the current user and display on the detail user form
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-// User is signed in.
-//we are going to firebase with these details and filing the form
+// User is signed in AND
+//We are going to firebase with these set of details and filing the form
       var ref = firebase.database().ref('users/' + user.uid);
       ref.on('value', function(snapshot) {
         var obj = snapshot.val();
@@ -184,7 +190,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       });
     }
   });
-//this is for update button to update user information on the database
+//This is for update button to update user information on the database
   $scope.update = function(form) {
     if (form.$valid) {
       var id = $scope.form.id;
@@ -198,7 +204,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
         email: email,
         licence : licence
       });
-      // this is to say that details were updated successfully
+// This is to say that the details were updated successfully
       var alert1 = $ionicPopup.alert({
         title: 'Success',
         template: 'Details updated successfully'
@@ -208,22 +214,22 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       }, 3000);
     }
   };
-//this is the button to change the password
+//This is the button to change the password
   $scope.changePassword = function(form) {
     if (form.$valid) {
       var password = $scope.form.password,
           password2 = $scope.form.password2;
       if (password === password2) {
         var user = firebase.auth().currentUser;
-//we are updating the password on the database with this code
+//We are updating the password on the database with this code
         user.updatePassword($scope.form.password).then(function() {
-// if everything is ok will say Success
+// If everything its ok a pop up message will say "Success"
           var alertSuccess = $ionicPopup.alert({
             title: 'Success',
             template: 'Update successful.'
           });
         }, function(error) {
-// if is not ok will show a error
+// If its not ok a pop up message will say "Error"
           var alertError = $ionicPopup.alert({
             title: 'Error',
             template: error.message
@@ -231,7 +237,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
         });
       }
       else {
-// we are checking that both value are equal and if are not same will give a Error
+// We are checking that both value are equal and if they are not the same will give an "Error" message
         var alert2 = $ionicPopup.alert({
           title: 'Error',
           template: 'The values must be the same'
@@ -239,7 +245,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       }
     }
   };
-// this to display passwod form and change the view either for details or password forms
+// This is to display passwod form and change the view either for details or for password forms
   $scope.displayPasswordForm = function() {
     $scope.showDetailsForm = false;
     $scope.showPasswordForm = true;
@@ -248,20 +254,21 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
     $scope.showDetailsForm = true;
     $scope.showPasswordForm = false;
   };
-// this again for the back arrow button
+// This is again for the back arrow button
   $scope.goBack = function() {
     $state.go('mainMenu');
   };
-//this is for the home icon
+//This is for the home icon button
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
-//this is for the ledearboard icon
+//This is for the ledearboard icon button
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
 })
-// street map section tha controls everithing for the map
+
+//Below is the "Street Map" controller that manages "street map" activity
 .controller('StreetMapCtrl', function($scope, $state, $cordovaGeolocation) {
   $scope.goBack = function() {
     $state.go('mainMenu');
@@ -272,12 +279,12 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-  //this are options to get the current position using the google maps API
+  //These are options to get the current position using the google maps API
   var options = {
     timeout             : 10000,
     enableHighAccuracy  : true
   };
-//we are geting the current position of our browser
+//We are geting the current position of the browser
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     var mapOptions = {
@@ -285,32 +292,32 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-//we are centering the map with our current position
+//We are centering the map with our current position
     $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    //here is the code where Wait until the map is loaded
+//Here is the code where it waits until the map is loaded
     google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-//we are checking the current date
+//We are checking the current date
       var today = new Date();
       var ref = firebase.database().ref('messages');
-//we are taking all the messages from the database
+//We are taking all the messages from the database
       ref.on('value', function(snapshot) {
-//for all the messages...
+//For all the messages...
         if (snapshot) {
           snapshot.forEach(function (childSnapshot) {
             var item = childSnapshot.val(),
                 date = new Date(item.date);
-//we are checking that the message date is from today
+//We are checking that the message date is from today
             if (
               today.getDate() == date.getDate() &&
               today.getMonth() == date.getMonth() &&
               today.getFullYear() == date.getFullYear()
             ) {
-  //we are taking the location and the date from the message
+//We are taking the location and the date from the message
               var color,
                   location = new google.maps.LatLng(item.location.latitude, item.location.longitude),
                   stringDate = '';
               stringDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-//depending on the message type we are using different colors on the map markers
+//Depending on the message type we are using different colors on the map markers
               switch (item.type) {
                 case 'accident':
                   color = 'FF0000';
@@ -327,38 +334,38 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
                 default:
                   color = '9933FF';
               }
-//this is the URL for the marker icon
+//This is the URL for the marker icon
               var image = {
                 url: 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=|' + color
               };
-//here we are transforming longitude and latitude information into strings like addres and date
+//Here we are transforming longitude and latitude information into strings like addres and date
               var geocoder = new google.maps.Geocoder;
               geocoder.geocode({'location': location}, function(results, status) {
                 if (status === 'OK') {
                   if (results[1]) {
-//we are building the marker object
+//Here we are building the marker object
                     var marker = new google.maps.Marker({
                       icon      : image,
                       map       : $scope.map,
                       animation : google.maps.Animation.DROP,
                       position  : location
                     });
-//we are building marker information. this is displayng information about a particular incident
+//We are building marker information which displays details about a particular incident
                     var infoWindow = new google.maps.InfoWindow({
                       content   : '<b>' + item.type.charAt(0).toUpperCase() + item.type.slice(1) + '</b><br />' + results[1].formatted_address + '<br />' + stringDate
                     });
-//this the function when click on particular incident
+//This is the function when user clicks on particular incident
                     google.maps.event.addListener(marker, 'click', function () {
                       infoWindow.open($scope.map, marker);
                     });
                   }
                   else {
-                    //if something goes wrong this display an error
+//If something goes wrong this code is to display an error message
                     window.alert('No results found');
                   }
                 }
                 else {
-//if something goes wrong this display an error
+//If something goes wrong this code is to display an error message
                   window.alert('Geocoder failed due to: ' + status);
                 }
               });
@@ -368,54 +375,54 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       });
     });
   },
-//if something goes wrong with the location this display an error
+//If something goes wrong with the location this will display an error message
   function(error){
     console.log("Could not get location");
   });
 })
 
+//Below is the "Leaderboard" controller that manages "leaderboard" activity
 .controller('LeaderboardCtrl', function($scope, $state) {
-  //button to go back on main menu
+//Arrow button function to go back on main menu
   $scope.goBack = function() {
-  //button to go back on main menu
     $state.go('mainMenu');
   };
-  //function to go back on main menu
+//The home icon button function to go back on main menu
   $scope.goHome = function() {
     $state.go('mainMenu');
   };
   var leaderboard = [];
-//take all the messages from the database
+//Take all the messages from the database
   var ref = firebase.database().ref('messages');
   ref.on('value', function(snapshot) {
     $scope.ranking = [];
-//for ech message we are taking the value
+//For ech message we are taking the value
     snapshot.forEach(function (childSnapshot) {
       var item = childSnapshot.val();
       var email = item.email;
-//we checking if email(user name) exist
+//Here we checking if email(user name) exist
       if (leaderboard[email]) {
-  //and adding plus 1
+//We adding plus 1
         leaderboard[email] += 1;
       }
       else {
-  //we are adding the email for first time and give the value of 1 because is first time
+//We are adding the email for first time and give the value of 1 because is first time
         leaderboard[email] = 1;
       }
     });
-//this array where email is saved and how many times that email is found
+//This is the array where the email is saved and how many times that emailhas been found
     var values = [];
     for (var key in leaderboard) {
       values.push([key, leaderboard[key]]);
     }
-//we are sorting the array by the value
+//We are sorting the array by the value
     function cmp(a, b) {
       return a[1] < b[1];
     }
     values.sort(cmp);
     for (var key in values) {
       var value = values[key];
-//we are updating the ranking list with these values
+//We are updating the ranking list with these values
       $scope.ranking.push({
         email: value[0],
         messages: value[1]
@@ -424,6 +431,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 })
 
+//Below is the "Speech Recognition" controller that manages "speech recognition" activity
 .controller('SpeechRecognitionCtrl', function($scope, $state, Firebase, $cordovaGeolocation) {
   $scope.goBack = function() {
     $state.go('mainMenu');
@@ -434,23 +442,23 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-//here we save the messages to the firebase
+//Down here we save the reports/messages to the firebase
   $scope.saveReport = function (user, report) {
     Firebase.saveReport(user, report);
   };
-//we are initialisating value
+//We are initialisation value
   var latitude,
       longitude,
       options = {
         timeout             : 10000,
         enableHighAccuracy  : true
       };
-//here we get our current position
+//Down here we get the current position
   $cordovaGeolocation.getCurrentPosition(options).then(function(position){
     latitude = position.coords.latitude;
     longitude = position.coords.longitude;
   });
-//this are some voice commands for the speech recogition Library
+//Below this are some voice commands functions for the speech recogition Library
   var commands = {
     'accident *val' : function(val) {
       console.log('Accident: ' + val);
@@ -468,7 +476,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       };
       $scope.$apply();
     },
-
     'checkpoint *val' : function(val) {
       console.log('Checkpoint: ' + val);
       $scope.report = {
@@ -477,7 +484,6 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       };
       $scope.$apply();
     },
-
     'rank *val' : function(val) {
       console.log('Rank: ' + val);
       $scope.report = {
@@ -486,27 +492,27 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
       };
       $scope.$apply();
     },
-//this is the clear command to clear meassage
+//Below this is the code for "CLEAR" command function to clear report/meassage
     'clear' : function() {
       console.log('Action clear');
       $scope.report = null;
       $scope.$apply();
     },
-// this is the send command and here also saves the mesage to the databese
+// Below is the code for "SEND" command function
     'send' : function() {
       console.log('Action send');
-// this for the text form where we speak to Check if the report exist
+// This for the text form where we speak to Check if the report exist
       if ($scope.report) {
-// here Saves the report to the database
+// Here starts the process for saving the Message to the database
         var user = firebase.auth().currentUser;
-//this to update the report with the current location
+//This is to update the Message with the current location
         $scope.report.location = {
           'longitude' : longitude,
           'latitude'  : latitude
         };
-//this is the function to save the report to the database
+//This is the function to save the report to the database
         $scope.saveReport(user, $scope.report);
-// Depends of the type of the message we are redirecting to do one action or one other
+// Depends on the type of the message we are redirecting to do one action or one other
           switch ($scope.report.type) {
             case 'accident':
               $state.go('accidents');
@@ -521,16 +527,17 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
                 $state.go('ranks');
               break;
         };
-// this Clears the message form once is sended
+// Below is the code which Clears the message form once the report/message has been sent it
         $scope.report = null;
       }
     }
   }
-//here we are implementing the speech recognition library
+//Below we are implementing the speech recognition library
   annyang.addCommands(commands);
   annyang.start();
 })
 
+//Below is the "Accidents" controller that manages "accidents" activity
 .controller('AccidentsCtrl', function($scope, $state) {
   $scope.goBack = function() {
     $state.go('roadInfo');
@@ -541,29 +548,29 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-//we are saving the current date to compare with the message dates
+//We are saving the current date to compare with the message dates
   var today = new Date();
   var ref = firebase.database().ref('messages');
-//we are taking all the messages from the database with type=accident
+//We are taking all the messages from the database with type=accident
   ref.orderByChild("type").equalTo("accident").on('value', function(snapshot) {
     $scope.messages = [];
-//for each message we are taking their date
+//For each message we are taking their date
     snapshot.forEach(function (childSnapshot) {
       var item = childSnapshot.val();
       var date = new Date(item.date);
-//down here we comparing the message date with the current date
+//Down here we comparing the message date with the current date
       if (
         today.getDate() == date.getDate() &&
         today.getMonth() == date.getMonth() &&
         today.getFullYear() == date.getFullYear()
       ) {
-//if the message is from today we are buiding the date with different format
+//If the message is from today we are building the date with different format
         item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-//here we are saving this message on the messages list wich is an array
+//Here we are saving this message on the messages list which is an array
         $scope.messages.push(item);
       }
     });
-//we are checking if we have no message from today and displa a message "no messages today"
+//We are checking if there are no messages from today and display a message "no messages today"
     if ($scope.messages.length == 0) {
       $scope.messages.push({
         email: 'No messages for today.',
@@ -574,6 +581,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 })
 
+//Below is the "Checkpoints" controller that manages "checkpoints" activity
 .controller('CheckpointsCtrl', function($scope, $state) {
   $scope.goBack = function() {
     $state.go('roadInfo');
@@ -584,29 +592,29 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-//we are saving the current date to compare with the message dates
+//We are saving the current date to compare with the message dates
   var today = new Date();
   var ref = firebase.database().ref('messages');
-//we are taking all the messages from the database with type=accident
+//We are taking all the messages from the database with type=Checkpoint
   ref.orderByChild("type").equalTo("checkpoint").on('value', function(snapshot) {
     $scope.messages = [];
-//for each message we are taking their date
+//For each message we are taking their date
     snapshot.forEach(function (childSnapshot) {
       var item = childSnapshot.val();
       var date = new Date(item.date);
-//down here we comparing the message date with the current date
+//Down here we comparing the message date with the current date
       if (
         today.getDate() == date.getDate() &&
         today.getMonth() == date.getMonth() &&
         today.getFullYear() == date.getFullYear()
       ) {
-//if the message is from today we are building the date with different format
+//If the message is from today we are building the date with different format
         item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-//here we are saving this message on the messages list wich is an array
+//Here we are saving this message on the messages list which is an array
         $scope.messages.push(item);
       }
     });
-//we are checking if we have no message from today and displa a message "no messages today"
+    //We are checking if there are no messages from today and display a message "no messages today"
     if ($scope.messages.length == 0) {
       $scope.messages.push({
         email: 'No messages for today.',
@@ -617,6 +625,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 })
 
+//Below is the "Ranks" controller that manages "ranks" activity
 .controller('RanksCtrl', function($scope, $state) {
   $scope.goBack = function() {
     $state.go('roadInfo');
@@ -627,29 +636,29 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-//we are saving the current date to compare with the message dates
+//We are saving the current date to compare with the message dates
   var today = new Date();
   var ref = firebase.database().ref('messages');
-//we are taking all the messages from the database with type=accident
+//We are taking all the messages from the database with type=rank
   ref.orderByChild("type").equalTo("rank").on('value', function(snapshot) {
     $scope.messages = [];
-//for each message we are taking their date
+//For each message we are taking their date
     snapshot.forEach(function (childSnapshot) {
       var item = childSnapshot.val();
       var date = new Date(item.date);
-//down here we comparing the message date with the current date
+//Down here we comparing the message date with the current date
       if (
         today.getDate() == date.getDate() &&
         today.getMonth() == date.getMonth() &&
         today.getFullYear() == date.getFullYear()
       ) {
-//if the message is from today we are building the date with different format
+//If the message is from today we are building the date with different format
         item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-//here we are saving this message on the messages list which is an array
+//Here we are saving this message on the messages list which is an array
         $scope.messages.push(item);
       }
     });
-//we are checking if we have no message from today and displa a message "no messages today"
+//We are checking if there are no messages from today and display a message "no messages today"
     if ($scope.messages.length == 0) {
       $scope.messages.push({
         email: 'No messages for today.',
@@ -660,6 +669,7 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   });
 })
 
+//Below is the "Traffic" controller that manages "traffic" activity
 .controller('TrafficCtrl', function($scope, $state) {
   $scope.goBack = function() {
     $state.go('roadInfo');
@@ -670,29 +680,29 @@ angular.module('bangOnTaxiApp.controllers', ['firebase'])
   $scope.goLeaderboard = function() {
     $state.go('leaderboard');
   };
-//we are saving the current date to compare with the message dates
+//We are saving the current date to compare with the message dates
   var today = new Date();
   var ref = firebase.database().ref('messages');
-//we are taking all the messages from the database with type=accident
+//We are taking all the messages from the database with type=traffic
   ref.orderByChild("type").equalTo("traffic").on('value', function(snapshot) {
     $scope.messages = [];
-//for each message we are taking their date
+//For each message we are taking their date
     snapshot.forEach(function (childSnapshot) {
       var item = childSnapshot.val();
       var date = new Date(item.date);
-//down here we comparing the message date with the current date
+//Down here we comparing the message date with the current date
       if (
         today.getDate() == date.getDate() &&
         today.getMonth() == date.getMonth() &&
         today.getFullYear() == date.getFullYear()
       ) {
-//if the message is from today we are building the date with different format
+//If the message is from today we are building the date with different format
         item.date = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + ' ' + date.getHours() + ':' + date.getMinutes();
-//here we are saving this message on the messages list which is an array
+//Here we are saving this message on the messages list which is an array
         $scope.messages.push(item);
       }
     });
-//we are checking if we have no message from today and displa a message "no messages today"
+//We are checking if there are no messages from today and display a message "no messages today"
     if ($scope.messages.length == 0) {
       $scope.messages.push({
         email: 'No messages for today.',
